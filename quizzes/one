@@ -1,0 +1,103 @@
+Why do they call it a relational database?
+
+Because they data is organized into relations: a mathematical construct that defines closely related data.
+
+
+
+What is SQL?
+
+Structured Query Language - the language of relation databases
+
+
+
+There are two predominant views into a relational database. What are they, and how are they different?
+
+Data and schema views. Schema views show the column name and value type of that column. Data views show the actual data within the table.
+
+
+
+In a table, what do we call the column that serves as the main identifier for a row of data? We're looking for the general database term, not the column name.
+
+Primary key.
+
+
+
+What is a foreign key, and how is it used?
+
+A foreign key is a key unique to the many side of a table when trying to relate it to a different table
+
+
+
+At a high level, describe the ActiveRecord pattern. This has nothing to do with Rails, but the actual pattern that ActiveRecord uses to perform its ORM duties.
+
+ActiveRecord allows us to access the database through Ruby. A class represents a table where each instance of a class object is a row in the database. CRUD actions can be performed on these
+
+
+
+If there's an ActiveRecord model called "CrazyMonkey", what should the table name be?
+
+crazy_monkeys
+
+
+
+If I'm building a 1:M association between Project and Issue, what will the model associations and foreign key be?
+
+Project: has_many :issues
+Issue: belongs_to :project
+Foreign key: project_id
+
+
+
+Given this code
+
+class Zoo < ActiveRecord::Base
+      has_many :animals
+end
+
+    What do you expect the other model to be and what does database schema look like?
+      - The other model will be an "Animal" with all of its attributes plus one that is zoo_id
+    What are the methods that are now available to a zoo to call related to animals?
+      - Many. Uniq, first, etc. Anything that relates to collections in ActiveRecord.
+    How do I create an animal called "jumpster" in a zoo called "San Diego Zoo"?
+      - Zoo.create(name: "San Diego Zoo")
+      - Zoo.first.animals.create(name: "jumpster", zoo_id: 1)
+
+
+
+What is mass assignment? What's the non-mass assignment way of setting values?
+
+Mass assignment allows you to create an instance of an object in ActiveRecord (or describe a row in a table) in one line by definine each property, or at least the ones you want. Non-mass assignment is the opposite where the instance is created first and then on each successive line a property is defined.
+
+
+
+Suppose Animal is an ActiveRecord model. What does this code do? Animal.first
+
+It grabs the first row of data within the database and stores that information into an Animal object with the columns as attributes and the values filled in with each one it is related to.
+
+
+
+If I have a table called "animals" with a column called "name", and a model called Animal, how do I instantiate an animal object with name set to "Joe". Which methods makes sure it saves to the database?
+
+Animal.create(name: 'Joe')
+
+
+
+How does a M:M association work at the database level?
+
+There exists a join table to connect two other tables together, where each has a foreign key that exists in the join table.
+
+
+
+What are the two ways to support a M:M association at the ActiveRecord model level? Pros and cons of each approach?
+
+has_many :through
+  - the only drawback is that you have to create a join table
+
+has_and_belongs_to_many
+  - the drawback is that you cannot create any other attributes which would involve the join table needed for the M:M association
+
+
+
+Suppose we have a User model and a Group model, and we have a M:M association all set up. How do we associate the two?
+
+We use a join table and then use has_many :through

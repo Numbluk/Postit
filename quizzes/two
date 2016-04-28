@@ -1,0 +1,68 @@
+Name all the 7 (or 8) routes exposed by the resources keyword in the routes.rb file. Also name the 4 named routes, and how the request is routed to the controller/action.
+
+index     GET   /models
+show      GET   /models/:id
+new       GET   /models/new
+create    POST  /models
+edit      GET   /models/:id/edit
+update    PATCH /models/:id
+destroy   DELTE /models/:id
+
+
+
+What is REST and how does it relate to the resources routes?
+
+REST refers to REpresentational State Transfer. It uses a statless, client-server, cacheable communications protocol. RESTful apps use HTTP requests to implement CRUD operations. When we use resources routes, we are mapping browser requests to the controller actions of our apps.
+
+
+
+What's the major difference between model backed and non-model backed form helpers?
+
+On model backed helpers the form is tied to a model and Rails will auto fill-in forms on model backed ones and knows if it will be a POST or a PATCH. We usually use model-backed helpers for CRUD operations.
+
+
+
+How does form_for know how to build the <form> element?
+
+You pass it an instance of the model.
+
+
+
+What's the general pattern we use in the actions that handle submission of model-backed forms (ie, the create and update actions)?
+
+if @model.save?
+  notify
+  redirect_elsewhere
+else
+  render something_showing_error
+end
+
+
+
+How exactly do Rails validations get triggered? Where are the errors saved? How do we show the validation messages on the user interface?
+
+The validations get triggered on the saving of the model to the database. The errors are saved with in the instance variable as an array of messages. We show the messages by iterating through the @model.errors.full_messages
+
+
+
+What are Rails helpers?
+
+Rails helpers are methods that allow you to extract away logic from views. You can declare helpers in application_helper.rb to use the project-wide.
+
+
+
+What are Rails partials?
+
+Rails partials are a way to reuse similar code (and thus share HTML).
+
+
+
+When do we use partials vs helpers?
+
+Partials are used in the views as a way to share HTML/Rails generated HTML. Partials should only contain presentation material. Helpers are mainly to be used when some logic is needed in the view.
+
+
+
+When do we use non-model backed forms?
+
+We use non-model backed forms when there is no model to back the form up.

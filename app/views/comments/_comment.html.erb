@@ -1,0 +1,31 @@
+<div class="clearfix">
+  <% if logged_in? %>
+    <div class="well span0 text-center">
+      <%= link_to votes_post_comment_path(comment.post, comment, vote: true), method: :post do %>
+        <i class="icon-arrow-up"></i>
+      <% end %>
+
+      <div><%= comment.sum_votes %> Votes</div>
+
+      <%= link_to votes_post_comment_path(comment.post, comment, vote: false), method: :post do %>
+        <i class="icon-arrow-down"></i>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class='well span8'>
+    <% user_page ||= false %>
+    <% if user_page %>
+      <p>
+        "<%= comment.body %>"
+        <span>on <%= link_to comment.post.title, post_path(comment.post) %></span>
+      </p>
+    <% else %>
+      <p>
+        "<%= comment.body %>"
+      </p>
+    <% end %>
+    <small>by: <%= comment.creator.username %></small>
+    <small>at: <%= fix_date(comment.created_at) %></small>
+  </div>
+</div>

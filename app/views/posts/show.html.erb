@@ -1,0 +1,30 @@
+<%= render @post.categories %>
+
+<div class='pull-right'>
+   [<%=link_to 'edit this post', edit_post_path(@post)%>]
+</div>
+
+<%= render 'shared/content_title', title: @post.title %>
+
+<p>
+  <%= @post.description %>
+</p>
+
+<hr>
+
+<% if logged_in? %>
+  <%= form_for [@post, @comment] do |f| %>
+    <%= render 'shared/errors', model: @comment %>
+
+    <%= f.label :body, 'Leave a comment' %>
+    <%= f.text_area :body, cols: 5 %>
+    <br>
+
+    <%= f.submit 'Submit Comment', class: 'btn btn-primary' %>
+  <% end %>
+
+  <hr>
+<% end %>
+
+<h5>Comments</h5>
+<%= render @post.comments %>
